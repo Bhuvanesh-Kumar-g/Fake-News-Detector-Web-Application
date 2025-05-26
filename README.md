@@ -2,7 +2,7 @@
 
 This project is a web application designed to help users identify potentially fake news articles. It takes a news headline or topic as input, fetches related articles using the News API, classifies them using a pre-trained Hugging Face model, and presents an overall assessment.
 
-*(Optional: Add a screenshot of your web app here. Name it `app_screenshot.png` and place it in the root directory.)*
+*(Optional: Add a screenshot of your web app here. Name it `Screenshot 2025-05-26 121759.png` and place it in the root directory.)*
 <!-- ![Screenshot of the Fake News Detector](./app_screenshot.png) -->
 
 ## Features
