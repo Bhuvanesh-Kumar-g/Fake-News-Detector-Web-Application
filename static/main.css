@@ -1,0 +1,101 @@
+html, body {
+    height: 100%; 
+    margin: 0; 
+    padding: 0;
+}
+body {
+    font-family: "Poppins", sans-serif;
+    font-style: italic;
+    background-image: url('2.jpg'); /* Set the background image */
+    background-color: #2b2d2e; /* Fallback color */
+    background-size: cover; /* Cover the entire area */
+    background-position: center; /* Center the image */
+    display: flex; /* Use flexbox to center content */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+}
+.content {
+    text-align: center; 
+    font-style: oblique;
+    color: rgb(241, 238, 238); 
+    padding: 20px;
+    background-color: rgba(10, 10, 8, 0.863); /* Semi-transparent background */
+    border-radius: 12px;
+    max-width: 600px; 
+    width: 70%; /* Responsive width */
+    margin: auto; 
+    cursor: pointer;
+    
+}
+/* Style for the main search box container */
+.search-box {
+    width: 80%;
+    max-width: 600px;
+    height: 60%;
+    margin:0 auto;
+}
+.input-group {
+    display: flex;
+    border: 1px solid #ccc; /* border around the combined box and button */
+    border-radius: 25px; /* rounded corners */
+    overflow: hidden; /* hide overlapping borders */
+    width: 90%;
+    padding: 2px;
+    max-width: 500px; /* adjust as needed */
+    box-shadow: none;
+    margin: 0 auto; /* centers the element */
+    justify-content: center; /* centers child elements */
+}
+
+/* Style for the textarea to look like an input */
+#newsInput {
+    flex: 1;
+    padding: 5px;
+    border: none;
+    resize: none;
+    width: 100%;
+    border-radius:  25px 0 0 25px;
+    outline: none;
+    font-size: 16px;
+
+}
+
+/* Style the button to look attached to the textarea */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1f59bd;
+    color: white;
+    border: none;
+    padding: 9px 19px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0 25px 25px 0;
+    border-left: 1px solid #ccc;
+    border-right:2px solid #ccc ;
+}
+/* Icon styling */
+.material-symbols-outlined {
+    font-size: 30px;
+    margin-right: 5px;
+}
+.icon {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    vertical-align: middle;
+    /* Additional styles if needed */
+}
+/* Hover effects */
+.btn:hover {
+    background-color: #693ad6f3;
+}
+
+.result {
+    margin-top: 20px; 
+    padding: 10px; 
+    border-radius: 4px;
+    display: inline-block; 
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Identifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
+    <style>
+        .loader {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .error {
+            color: red;
+        }
+        .article-list {
+            margin-top: 20px;
+        }
+        .article-item {
+            margin-bottom: 10px;
+        }
+        .article-item a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .accuracy {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Fake News Identifier</h1>
+        <p>Enter a news article to check if it's Fake or Real:</p>
+        
+        <form id="newsForm">
+            <div class="input-group">
+                <textarea id="newsInput" rows="3" placeholder="News Article Headlines" required></textarea>
+                <button type="submit" class="btn" id="searchButton">
+                    <span class="material-symbols-outlined">search</span> Check if it's Fake
+                </button>
+            </div>
+        </form>
+
+        <div class="loader" id="loader"></div>
+        
+        <div id="errorMessage" style="display: none; color: red; margin-top: 15px;"></div>
+        
+        <div id="resultContainer" style="display: none;">
+            <div id="classificationContainer" class="accuracy"></div>
+            <div id="accuracyContainer" class="accuracy"></div>
+        </div>
+
+        <div id="topArticlesContainer" class="article-list" style="display: none;"></div>
+
+        <div id="buttonContainer" class="button-container" style="display: none;">
+            <button id="showArticlesButton">Show All Articles</button>
+        </div>
+
+        <div id="articlesContainer" class="article-list" style="display: none;"></div>
+    </div>
+
+    <script>
+        document.getElementById('newsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newsInput = document.getElementById('newsInput').value;
+            const resultContainer = document.getElementById('resultContainer');
+            const accuracyContainer = document.getElementById('accuracyContainer');
+            const classificationContainer = document.getElementById('classificationContainer');
+            const loader = document.getElementById('loader');
+            const errorMessage = document.getElementById('errorMessage');
+            const buttonContainer = document.getElementById('buttonContainer');
+            const topArticlesContainer = document.getElementById('topArticlesContainer');
+            const articlesContainer = document.getElementById('articlesContainer');
+            const showArticlesButton = document.getElementById('showArticlesButton');
+
+            // Show loader and hide previous results and error messages
+            loader.style.display = 'block';
+            resultContainer.style.display = 'none';
+            topArticlesContainer.style.display = 'none';
+            buttonContainer.style.display = 'none';
+            articlesContainer.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            fetch('/check_news', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ news_input: newsInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                loader.style.display = 'none';  // Hide the loader
+
+                if (data.majority_vote) {
+                    // Show classification and accuracy
+                    classificationContainer.textContent = `Overall Classification: ${data.majority_vote}`;
+                    if (data.majority_vote.toLowerCase() === 'authentic') {
+                        classificationContainer.style.color = 'green';
+                    } else if (data.majority_vote.toLowerCase() === 'fake') {
+                        classificationContainer.style.color = 'red';
+                    } else {
+                        classificationContainer.style.color = 'black'; // Default color for unexpected values
+                    }
+
+                    accuracyContainer.textContent = `Accuracy: ${data.accuracy.toFixed(2)}%`;
+
+                    resultContainer.style.display = 'block';  // Show the result container
+                    buttonContainer.style.display = 'block';  // Show the button container
+
+                    // Show top 3 articles
+                    topArticlesContainer.innerHTML = '';
+                    data.top_articles.forEach(article => {
+                        const articleDiv = document.createElement('div');
+                        articleDiv.classList.add('article-item');
+                        articleDiv.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a> - ${article.classification}`;
+                        topArticlesContainer.appendChild(articleDiv);
+                    });
+                    topArticlesContainer.style.display = 'block';  // Show the top 3 articles
+
+                    // Show the "Show All Articles" button
+                    showArticlesButton.onclick = () => {
+                        // Toggle visibility of the full articles list
+                        if (articlesContainer.style.display === 'none') {
+                            // Display all articles
+                            articlesContainer.innerHTML = '';
+                            data.all_articles.forEach(article => {
+                                const articleDiv = document.createElement('div');
+                                articleDiv.classList.add('article-item');
+                                articleDiv.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a> - ${article.classification}`;
+                                articlesContainer.appendChild(articleDiv);
+                            });
+                            articlesContainer.style.display = 'block';  // Show all articles
+                            showArticlesButton.textContent = 'Hide All Articles';  // Change button text
+                        } else {
+                            articlesContainer.style.display = 'none';  // Hide all articles
+                            showArticlesButton.textContent = 'Show All Articles';  // Change button text
+                        }
+                    };
+                } else {
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = data.error || "An error occurred while fetching the news.";
+                }
+            })
+            .catch(err => {
+                loader.style.display = 'none';
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = "An error occurred while fetching the news.";
+            });
+        });
+    </script>
+</body>
+</html>
