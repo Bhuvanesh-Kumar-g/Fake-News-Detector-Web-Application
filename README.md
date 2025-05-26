@@ -15,31 +15,6 @@ This project is a web application designed to help users identify potentially fa
 *   **Article Listing:** Shows top related articles and allows users to view all fetched articles with their classifications and links to the original source.
 *   **Web Interface:** A Flask-based web application with a user-friendly interface.
 
-## Project Structure
-Use code with caution.
-Markdown
-.
-├── Fake.csv # Dataset for potential local model training
-├── True.csv # Dataset for potential local model training
-├── chatgpt.ipynb # Jupyter Notebook for development/experimentation
-├── client_secret_....json # Google OAuth Client Secret (SHOULD BE IGNORED & SECURED)
-├── fake_news_app.py # Main Flask application
-├── fake_news_model.pkl # Pickled model (if used by local training scripts)
-├── model.pkl # Another pickled model (if used by local training scripts)
-├── static/ # Static assets for the web app
-│ ├── 2.jpg # Background image
-│ ├── 3.jpg # Image
-│ ├── 4.jpg # Image
-│ └── main.css # Main stylesheet
-├── templates/ # HTML templates
-│ ├── check_new.html # Page for checking news
-│ └── index.html # Landing page
-├── test.py # Test script (purpose to be defined)
-├── test_openai.py # Test script for OpenAI (purpose to be defined)
-├── tfidf_vectorizer.pkl # Pickled TF-IDF vectorizer (if used by local training)
-├── train_model.py # Script to train a local model (using .csv and .pkl files)
-└── vectorizer.pkl # Another pickled vectorizer (if used by local training)
-**Note on `client_secret_...json`:** This file contains sensitive credentials and **MUST NOT** be committed to public repositories. It should be added to `.gitignore`.
 
 **Note on Model Usage:** The primary classification in `fake_news_app.py` is done via a Hugging Face model (`Pavan48/fake_news_detection_roberta`). The `.pkl` files and `train_model.py` seem to relate to an alternative, locally trained model approach which is not currently integrated into the main web application's classification logic.
 
