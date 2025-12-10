@@ -1,101 +1,151 @@
-html, body {
-    height: 100%; 
-    margin: 0; 
+/* --- IMPORTS --- */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Poppins:wght@300;400;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap');
+
+/* --- GLOBAL RESET --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
     padding: 0;
 }
+
 body {
     font-family: "Poppins", sans-serif;
-    font-style: italic;
-    background-image: url('2.jpg'); /* Set the background image */
-    background-color: #2b2d2e; /* Fallback color */
-    background-size: cover; /* Cover the entire area */
-    background-position: center; /* Center the image */
-    display: flex; /* Use flexbox to center content */
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-}
-.content {
-    text-align: center; 
-    font-style: oblique;
-    color: rgb(241, 238, 238); 
-    padding: 20px;
-    background-color: rgba(10, 10, 8, 0.863); /* Semi-transparent background */
-    border-radius: 12px;
-    max-width: 600px; 
-    width: 70%; /* Responsive width */
-    margin: auto; 
-    cursor: pointer;
-    
-}
-/* Style for the main search box container */
-.search-box {
-    width: 80%;
-    max-width: 600px;
-    height: 60%;
-    margin:0 auto;
-}
-.input-group {
+    color: white;
+    line-height: 1.6;
+    min-height: 100vh;
     display: flex;
-    border: 1px solid #ccc; /* border around the combined box and button */
-    border-radius: 25px; /* rounded corners */
-    overflow: hidden; /* hide overlapping borders */
+    flex-direction: column;
+}
+
+/* --- BACKGROUND IMAGES CONFIGURATION --- */
+
+/* 1. Landing Page Background (Home) */
+body.landing-page {
+    background-image: url('4.jpg'); /* Make sure 4.jpg is in static folder */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* 2. Tool Page Background (Check News) */
+body.tool-page {
+    background-image: url('2.jpg'); /* Make sure 2.jpg is in static folder */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* --- THE GLASS DESIGN (Shared by both pages) --- */
+.glass-container {
+    background: rgba(0, 0, 0, 0.75); /* Dark transparent background */
+    backdrop-filter: blur(8px);       /* Blurs the image behind it */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 40px;
+    margin: 40px auto;
     width: 90%;
-    padding: 2px;
-    max-width: 500px; /* adjust as needed */
-    box-shadow: none;
-    margin: 0 auto; /* centers the element */
-    justify-content: center; /* centers child elements */
+    max-width: 900px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    text-align: center;
 }
 
-/* Style for the textarea to look like an input */
-#newsInput {
-    flex: 1;
-    padding: 5px;
-    border: none;
-    resize: none;
-    width: 100%;
-    border-radius:  25px 0 0 25px;
-    outline: none;
-    font-size: 16px;
-
+/* --- TYPOGRAPHY --- */
+h1, h2, h3 {
+    font-family: "EB Garamond", serif;
+    margin-bottom: 20px;
 }
 
-/* Style the button to look attached to the textarea */
+h1 { font-size: 3.5rem; text-shadow: 2px 2px 4px black; }
+h2 { font-size: 2.2rem; color: #acc521; } /* Accent Color */
+p { font-size: 1.1rem; margin-bottom: 20px; }
+
+/* --- BUTTONS --- */
 .btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #1f59bd;
+    background-color: #2c3e50;
     color: white;
-    border: none;
-    padding: 9px 19px;
-    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.2);
     cursor: pointer;
-    border-radius: 0 25px 25px 0;
-    border-left: 1px solid #ccc;
-    border-right:2px solid #ccc ;
-}
-/* Icon styling */
-.material-symbols-outlined {
-    font-size: 30px;
-    margin-right: 5px;
-}
-.icon {
-    font-family: 'Material Symbols Outlined';
-    font-weight: normal;
-    font-style: normal;
-    display: inline-block;
-    vertical-align: middle;
-    /* Additional styles if needed */
-}
-/* Hover effects */
-.btn:hover {
-    background-color: #693ad6f3;
+    gap: 10px;
 }
 
-.result {
-    margin-top: 20px; 
-    padding: 10px; 
-    border-radius: 4px;
-    display: inline-block; 
+.btn:hover {
+    background-color: #acc521;
+    color: black;
+    transform: translateY(-3px);
+}
+
+/* --- FORM ELEMENTS (For Check News Page) --- */
+.input-group { width: 100%; margin-bottom: 20px; }
+
+textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    padding: 20px;
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.1rem;
+    color: #333;
+    min-height: 120px;
+    resize: vertical;
+}
+
+textarea:focus { outline: 3px solid #acc521; }
+
+/* --- RESULTS SECTION --- */
+.verdict-box {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.explanation-list {
+    text-align: left;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #acc521;
+    margin-top: 20px;
+}
+.explanation-list li { margin-left: 20px; margin-bottom: 10px; }
+
+.article-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: left;
+}
+.article-item a { color: #81ecec; font-weight: bold; }
+
+/* --- LOADER --- */
+.loader {
+    border: 5px solid rgba(255,255,255,0.3);
+    border-top: 5px solid #acc521;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+    display: none;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* --- FOOTER --- */
+footer {
+    margin-top: auto;
+    background: rgba(0,0,0,0.9);
+    padding: 20px;
+    text-align: center;
+    color: #888;
 }
